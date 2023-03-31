@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react'
 
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
+import store from '@/store';
+import { Provider } from 'react-redux';
+import { auth } from '@/utils/firebase';
+import { addUser } from '@/features/user/userSlice';
 
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -11,13 +15,25 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     setIsSSR(false);
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        addUser({
+          _id: user.uid,
+          _type: 'user',
+          userName: user.displayName,
+          image: user.photoURL
+        });
+      } else {
+
+      }
+    });
   }, [])
 
   
   if(isSSR) return null;
 
   return (
-    <div>
+    <Provider store={store}>
       <Navbar />
       <div className="flex gap-6 md:gap-20">
         <div className='h-[92vh] overflow-hidden xl:hover:overflow-auto'>
@@ -27,6 +43,6 @@ export default function App({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </div>
       </div>
-    </div>
+    </Provider>
   )
 }

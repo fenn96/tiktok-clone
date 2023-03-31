@@ -7,13 +7,14 @@ import { ImCancelCircle } from 'react-icons/im';
 import Discover from './Discover';
 import SuggestedAccounts from './SuggestedAccounts';
 import Footer from './Footer';
+import { useAppSelector } from '@/hooks';
+import { RootState } from '@/store';
 
 type Props = {}
 
 const Sidebar = (props: Props) => {
-  const [showSidebar, setShowSidebar] = useState(true);
-
-  const userProfile = false;
+  const [showSidebar, setShowSidebar] = useState<Boolean>(true);
+  const user = useAppSelector((state: RootState) => state.user);
 
   const normalLink = `flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start
   cursor-pointer font-semibold text-[#F51997]`;
@@ -41,7 +42,7 @@ const Sidebar = (props: Props) => {
                 </div>
               </Link>
             </div>
-              {!userProfile && (
+              {!user._id && (
                 <div className='px-2 py-4 hidden xl:block'>
                   <p className='text-gray-400'>
                     Log in to like and comment on videos
