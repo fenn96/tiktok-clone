@@ -9,11 +9,13 @@ import { IoMdAdd } from 'react-icons/io';
 import Logo from '../utils/tiktik-logo.png';
 import { signInWithPopup, signOut } from 'firebase/auth';
 import { auth, provider } from '@/utils/firebase';
-import { createOrGetUser } from '@/utils';
+import { createOrGetUser, fetchAllUsers } from '@/utils';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { addUser, removeUser } from '@/features/user/userSlice';
 import { RootState } from '@/store';
 import { BsGoogle } from 'react-icons/bs';
+import { addAllUsers } from '@/features/user/allUsersSlice';
+import { User } from '@/types';
 
 type Props = {}
 

@@ -21,6 +21,8 @@ const Detail = ({ postDetails }: IProps ) => {
   const [post, setPost] = useState(postDetails);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
+  const [comment, setComment] = useState('');
+  const [isPostingComment, setIsPostingComment] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
   const user = useAppSelector((state: RootState) => state.user);
@@ -54,6 +56,23 @@ const Detail = ({ postDetails }: IProps ) => {
     }
   }
 
+  const addComment = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+
+    if(user._id && comment) {
+      setIsPostingComment(true);
+
+      const { data } = await axios.put(`http://localhost:3000/api/post/${post._id}`, {
+        userId: user._id,
+        comment
+      });
+
+      setPost({ ...post, comments: data.comments });
+      setComment('');
+      setIsPostingComment(false);
+    }
+  }
+
   if(!post) return null;
 
   return (
@@ -62,7 +81,7 @@ const Detail = ({ postDetails }: IProps ) => {
       bg-black'>
         <div className='absolute top-6 left-2 lg:left-6 flex gap-6 z-50'>
           <p className='cursor-pointer' onClick={() => router.back()}>
-            <MdOutlineCancel className='text-white text-[35px]' />
+            <MdOutlineCancel className='text-white text-[35px] hover:opacity-90' />
           </p>
         </div>
         <div className="relative">
@@ -121,8 +140,8 @@ const Detail = ({ postDetails }: IProps ) => {
             </div>
               <Link href="/">
                 <div className='mt-3 flex flex-col gap-2'>
-                  <p className='flex gap-2 items-center md:text-md font-bold text-primary'>
-                    {post.postedBy.userName} {` `}
+                  <p className='flex gap-2 items-center md:text-md font-bold text-primary lowercase'>
+                    {post.postedBy.userName.replace(/\s+/g, '')}{' '}
                     <GoVerified className='text-blue-400 text-md' />
                   </p>
                   <p className='capitalize font-medium text-xs text-gray-500 hidden
@@ -145,6 +164,11 @@ const Detail = ({ postDetails }: IProps ) => {
           )}
         </div>
         <Comments
+          comment={comment}
+          setComment={setComment}
+          addComment={addComment}
+          comments={post.comments}
+          isPostingComment={isPostingComment}
         />
       </div>
     </div>

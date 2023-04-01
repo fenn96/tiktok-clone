@@ -12,7 +12,7 @@ import { RootState } from '@/store';
 
 type Props = {}
 
-const Sidebar = (props: Props) => {
+const Sidebar: NextPage = () => {
   const [showSidebar, setShowSidebar] = useState<Boolean>(true);
   const user = useAppSelector((state: RootState) => state.user);
 

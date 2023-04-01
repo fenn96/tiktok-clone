@@ -15,18 +15,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     setIsSSR(false);
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        addUser({
-          _id: user.uid,
-          _type: 'user',
-          userName: user.displayName,
-          image: user.photoURL
-        });
-      } else {
-
-      }
-    });
   }, [])
 
   

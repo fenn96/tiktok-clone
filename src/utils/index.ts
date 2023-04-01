@@ -1,5 +1,3 @@
-import { addUser } from '@/features/user/userSlice';
-import { useAppDispatch } from '@/hooks';
 import axios from 'axios';
 
 export const createOrGetUser = async (response: any) => {
@@ -14,4 +12,10 @@ export const createOrGetUser = async (response: any) => {
   await axios.post(`http://localhost:3000/api/auth`, user);
 
   return user;
+};
+
+export const fetchAllUsers = async () => {
+
+  const response = await axios.get(`http://localhost:3000/api/users`)
+  return response.data
 };
