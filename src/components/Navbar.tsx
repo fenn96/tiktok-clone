@@ -29,8 +29,8 @@ const Navbar = (props: Props) => {
         dispatch(addUser({
           _id: user.uid,
           _type: 'user',
-          userName: user.displayName,
-          image: user.photoURL
+          userName: user.displayName || '',
+          image: user.photoURL || ''
         }));
       } 
     });

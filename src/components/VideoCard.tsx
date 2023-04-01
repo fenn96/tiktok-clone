@@ -69,7 +69,7 @@ const VideoCard = ({ post: { caption, postedBy, video, _id, likes }}: IProps) =>
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
           className="rounded-3xl">
-          <Link href="/"
+          <Link href={`/detail/${_id}`}
           >
             <video
               loop
