@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
-import { NextPage } from 'next';
 import Link from 'next/link';
 import { GoVerified } from 'react-icons/go';
 
@@ -12,7 +11,6 @@ import { RootState } from '@/store';
 
 const SuggestedAccounts = () => {
   const allUsers = useAppSelector((state: RootState) => state.allUsers.allUsers);
-  console.log(allUsers)
 
   const dispatch = useAppDispatch()
 
